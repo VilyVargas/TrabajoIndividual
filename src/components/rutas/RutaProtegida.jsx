@@ -1,18 +1,15 @@
-const App = () => { return (
-  <Router>
-    <Encabezado />
-    <main className="margen-superior-main">
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/" element={<RutaProtegida><Inicio /></RutaProtegida>} />
-        <Route path="/categorias" element={<RutaProtegida><Categorias /></RutaProtegida>} />
-        <Route path="/catalogo" element={<Catalogo />} />
-        <Route path="/productos" element={<RutaProtegida><Productos /></RutaProtegida>} />
-        <Route path="**" element={<Pagina484 />} />
-      </Routes>
-    </main>
-  </Router>
-);
-}
+import React from "react";
+import { Navigate } from "react-router-dom";
 
-export default App;
+const RutaProtegida = ({ children }) => {
+  // Verifica si el usuario está autenticado usando localStorage
+  const estaLogueado = !!localStorage.getItem("usuario-supabase");
+
+  // Log para depuración
+  console.log("Usuario autenticado:", estaLogueado);
+
+  // Si está autenticado,redirige a la página de login
+  return estaLogueado ? children : <Navigate to="/login" replace />;
+};
+
+export default RutaProtegida;
