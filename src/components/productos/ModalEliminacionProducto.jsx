@@ -1,17 +1,45 @@
+import React, { useState } from "react";
+import { Modal, Button } from "react-bootstrap";
 
-import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Button } from "react-bootstrap";
+const ModalEliminacionProducto = ({
+  mostrarModalEliminacion,
+  setMostrarModalEliminacion,
+  eliminarProducto,
+  producto,
+}) => {
+  const [deshabilitado, setDeshabilitado] = useState(false);
 
-const Default = () => {
+  const handleEliminar = async () => {
+    if (deshabilitado) return;
+    setDeshabilitado(true);
+    await eliminarProducto();
+    setDeshabilitado(false);
+  };
+
   return (
-    <Container className="mt-3">
-      <Row className="align-items-center">
-        <Col>
-          <h2><i className="bi-house-fill me-2"></i> Default</h2>
-        </Col>
-      </Row>
-    </Container>
+    <Modal
+      show={mostrarModalEliminacion}
+      onHide={() => setMostrarModalEliminacion(false)}
+      backdrop="static"
+      keyboard={false}
+      centered
+    >
+      <Modal.Header closeButton>
+        <Modal.Title>Confirmar Eliminación</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        ¿Estás seguro de que deseas eliminar el producto "<strong>{producto?.nombre_producto}</strong>"?
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={() => setMostrarModalEliminacion(false)}>
+          Cancelar
+        </Button>
+        <Button variant="danger" onClick={handleEliminar} disabled={deshabilitado}>
+          Eliminar
+        </Button>
+      </Modal.Footer>
+    </Modal>
   );
 };
 
-export default Default;
+export default ModalEliminacionProducto;

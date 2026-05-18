@@ -105,21 +105,19 @@ const ModalRegistroProducto = ({
             </Col>
           </Row>
         </Form>
+
       </Modal.Body>
 
       <Modal.Footer>
         <Button variant="secondary" onClick={() => setMostrarModal(false)}>
           Cancelar
         </Button>
-        <Button
-          variant="primary"
-          onClick={handleAgregar}
-          disabled={deshabilitado}
-        >
+        <Button variant="primary" onClick={handleAgregar} disabled={deshabilitado}>
           Guardar
         </Button>
       </Modal.Footer>
     </Modal>
+
   );
 };
 

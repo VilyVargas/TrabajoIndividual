@@ -10,9 +10,10 @@ import TarjetaCategoria from "../components/categorias/TarjetasCategorias";
 import CuadroBusquedas from "../components/busquedas/CuadroBusquedas";
 import { Alert } from "react-bootstrap";
 import Paginacion from "../components/Ordenamiento/Paginacion";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 
 const Categorias = () => {
-
   const [registrosPorPagina, establecerRegistrosPorPagina] = useState(5);
   const [paginaActual, establecerPaginaActual] = useState(1);
 
@@ -30,7 +31,6 @@ const Categorias = () => {
     descripcion_categoria: "",
   });
 
-
   const [toast, setToast] = useState({ mostrar: false, mensaje: "", tipo: "" });
   const [mostrarModal, setMostrarModal] = useState(false);
   const [nuevaCategoria, setNuevaCategoria] = useState({
@@ -43,7 +43,7 @@ const Categorias = () => {
 
   const categoriasPaginadas = categoriasFiltradas.slice(
     (paginaActual - 1) * registrosPorPagina,
-    paginaActual * registrosPorPagina
+    paginaActual * registrosPorPagina,
   );
 
   useEffect(() => {
@@ -51,14 +51,15 @@ const Categorias = () => {
       setCategoriasFiltradas(categorias);
     } else {
       const textoLower = textoBusqueda.toLowerCase().trim();
-      const filtradas = categorias.filter((cat) =>
-        cat.nombre_categoria.toLowerCase().includes(textoLower) ||
-        (cat.descripcion_categoria && cat.descripcion_categoria.toLowerCase().includes(textoLower))
+      const filtradas = categorias.filter(
+        (cat) =>
+          cat.nombre_categoria.toLowerCase().includes(textoLower) ||
+          (cat.descripcion_categoria &&
+            cat.descripcion_categoria.toLowerCase().includes(textoLower)),
       );
       setCategoriasFiltradas(filtradas);
     }
   }, [textoBusqueda, categorias]);
-
 
   useEffect(() => {
     cargarCategorias();
@@ -105,14 +106,16 @@ const Categorias = () => {
     }
   };
 
-
   const actualizarCategoria = async () => {
     try {
-      if (!categoriaEditar.nombre_categoria.trim() || !categoriaEditar.descripcion_categoria.trim()) {
+      if (
+        !categoriaEditar.nombre_categoria.trim() ||
+        !categoriaEditar.descripcion_categoria.trim()
+      ) {
         setToast({
           mostrar: true,
           mensaje: "Debe llenar todos los campos.",
-          tipo: "advertencia"
+          tipo: "advertencia",
         });
         return;
       }
@@ -123,7 +126,7 @@ const Categorias = () => {
         .from("categorias")
         .update({
           nombre_categoria: categoriaEditar.nombre_categoria,
-          descripcion_categoria: categoriaEditar.descripcion_categoria
+          descripcion_categoria: categoriaEditar.descripcion_categoria,
         })
         .eq("id_categoria", categoriaEditar.id_categoria);
 
@@ -132,7 +135,7 @@ const Categorias = () => {
         setToast({
           mostrar: true,
           mensaje: `Error al actualizar la categoria ${categoriaEditar.nombre_categoria}.`,
-          tipo: "error"
+          tipo: "error",
         });
         return;
       }
@@ -141,18 +144,17 @@ const Categorias = () => {
       setToast({
         mostrar: true,
         mensaje: `Categoria ${categoriaEditar.nombre_categoria} actualizada exitosamente.`,
-        tipo: "exito"
+        tipo: "exito",
       });
     } catch (err) {
       setToast({
         mostrar: true,
         mensaje: "Error inesperado al actualizar categoria.",
-        tipo: "error"
+        tipo: "error",
       });
       console.error("Excepción al actualizar categoria:", err.message);
     }
   };
-
 
   const cargarCategorias = async () => {
     try {
@@ -185,7 +187,6 @@ const Categorias = () => {
     }
   };
 
-
   const abrirModalEdicion = (categoria) => {
     setCategoriaEditar({
       id_categoria: categoria.id_categoria,
@@ -200,11 +201,6 @@ const Categorias = () => {
     setMostrarModalEliminacion(true);
   };
 
-
-
-
-
-
   const manejoCambioInput = (e) => {
     const { name, value } = e.target;
     setNuevaCategoria((prev) => ({
@@ -216,15 +212,16 @@ const Categorias = () => {
   const agregarCategoria = async () => {
     await cargarCategorias();
     try {
-      if (!nuevaCategoria.nombre_categoria.trim() || !nuevaCategoria.descripcion_categoria.trim()) {
+      if (
+        !nuevaCategoria.nombre_categoria.trim() ||
+        !nuevaCategoria.descripcion_categoria.trim()
+      ) {
         setToast({
           mostrar: true,
           mensaje: "Debe llenar todos los campos.",
           tipo: "advertencia",
-
         });
         return;
-
       }
 
       const { error } = await supabase.from("categorias").insert([
@@ -263,10 +260,32 @@ const Categorias = () => {
       });
     }
   };
+  const generarPDFCategoria = (categoria) => {
+    const doc = new jsPDF();
 
+    // Título
+    doc.setFontSize(18);
+    doc.text("Reporte de Categoría", 14, 20);
 
+    // Línea decorativa
+    doc.line(14, 25, 195, 25);
 
+    // Información de la categoría
+    doc.setFontSize(12);
 
+    autoTable(doc, {
+      startY: 35,
+      head: [["Campo", "Valor"]],
+      body: [
+        ["ID", categoria.id_categoria],
+        ["Nombre", categoria.nombre_categoria],
+        ["Descripción", categoria.descripcion_categoria],
+      ],
+    });
+
+    // Descargar PDF
+    doc.save(`categoria_${categoria.id_categoria}.pdf`);
+  };
 
   return (
     <Container className="mt-3">
@@ -278,10 +297,7 @@ const Categorias = () => {
           </h3>
         </Col>
         <Col xs={3} sm={5} md={5} lg={5} className="text-end">
-          <Button
-            onClick={() => setMostrarModal(true)}
-            size="md"
-          >
+          <Button onClick={() => setMostrarModal(true)} size="md">
             <i className="bi-plus-lg"></i>
             <span className="d-none d-sm-inline ms-2">Nueva Categoria</span>
           </Button>
@@ -290,7 +306,6 @@ const Categorias = () => {
 
       <hr />
 
-      
       {/* Cuadro de búsqueda debajo de la línea divisoria */}
       <Row className="mb-4">
         <Col md={6} lg={5}>
@@ -303,16 +318,19 @@ const Categorias = () => {
       </Row>
 
       {/* Mensaje de no coincidencias solo cuando hay búsqueda y no hay resultados */}
-      {!cargando && textoBusqueda.trim() && categoriasFiltradas.length === 0 && (
-        <Row className="mb-4">
-          <Col>
-            <Alert variant="info" className="text-center">
-              <i className="bi bi-info-circle me-2"></i>
-              No se encontraron categorías que coincidan con "{textoBusqueda}".
-            </Alert>
-          </Col>
-        </Row>
-      )}
+      {!cargando &&
+        textoBusqueda.trim() &&
+        categoriasFiltradas.length === 0 && (
+          <Row className="mb-4">
+            <Col>
+              <Alert variant="info" className="text-center">
+                <i className="bi bi-info-circle me-2"></i>
+                No se encontraron categorías que coincidan con "{textoBusqueda}
+                ".
+              </Alert>
+            </Col>
+          </Row>
+        )}
 
       <Col xs={12} sm={12} md={12} className="d-lg-none">
         <TarjetaCategoria
@@ -321,7 +339,6 @@ const Categorias = () => {
           abrirModalEliminacion={abrirModalEliminacion}
         />
       </Col>
-
 
       {/* Spinner mientras se cargan las categorías */}
       {cargando && (
@@ -338,14 +355,14 @@ const Categorias = () => {
         <Row>
           <Col lg={12} className="d-none d-lg-block">
             <TablaCategorias
-              categorias={categorias}
+              categorias={categoriasPaginadas}
               abrirModalEdicion={abrirModalEdicion}
               abrirModalEliminacion={abrirModalEliminacion}
+              generarPDFCategoria={generarPDFCategoria}
             />
           </Col>
         </Row>
       )}
-
 
       {/* Modal de Registro */}
       <ModalRegistroCategoria
@@ -362,7 +379,6 @@ const Categorias = () => {
         eliminarCategoria={eliminarCategoria}
         categoria={categoriaAEliminar}
       />
-
 
       <ModalEdicionCategoria
         mostrarModalEdicion={mostrarModalEdicion}
@@ -383,8 +399,6 @@ const Categorias = () => {
         />
       )}
 
-
-
       {/* Notificación */}
       <NotificacionOperacion
         mostrar={toast.mostrar}
@@ -392,12 +406,8 @@ const Categorias = () => {
         tipo={toast.tipo}
         onCerrar={() => setToast({ ...toast, mostrar: false })}
       />
-
     </Container>
-
   );
-
-
 };
 
 export default Categorias;

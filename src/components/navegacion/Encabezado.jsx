@@ -82,6 +82,14 @@ function Encabezado() {
             {mostrarMenu ? <i className="bi-bag-heart-fill me-2"></i> : null}
             <strong>Productos</strong>
           </Nav.Link>
+          <Nav.Link
+            onClick={() => manejarNavegación("/Empleados")}
+            className={mostrarMenu ? "color-texto-marca" : "text-black"}
+          >
+            {mostrarMenu ? <i className="bi-people-fill me-2"></i> : null}
+            <strong>Empleados</strong>
+          </Nav.Link>
+          
           {/* Opción para ir al catálogo público desde admin */}
           <Nav.Link
             onClick={() => manejarNavegación("/Catalogo")}
