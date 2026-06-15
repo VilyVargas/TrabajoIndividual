@@ -9,7 +9,6 @@ import RutaProtegida from "./components/rutas/RutaProtegida";
 import Catalogo from "./views/Catalogo";
 import Clientes from "./views/Clientes";
 import Empleados from "./views/Empleados";
-import Pagina404 from "./views/Pagina404";
 import Ventas from "./views/Ventas";
 import "./App.css";
 import Login from "./views/Login";
