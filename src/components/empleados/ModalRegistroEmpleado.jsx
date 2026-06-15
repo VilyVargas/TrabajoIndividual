@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Modal, Form, Button, Row, Col } from "react-bootstrap";
 
@@ -7,13 +6,13 @@ const ModalRegistroEmpleado = ({
   setMostrarModal,
   nuevoEmpleado,
   setNuevoEmpleado,
-  agregarEmpleado
+  agregarEmpleado,
 }) => {
   const [deshabilitado, setDeshabilitado] = useState(false);
 
   const manejoCambio = (e) => {
     const { name, value } = e.target;
-    setNuevoEmpleado(prev => ({ ...prev, [name]: value }));
+    setNuevoEmpleado((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleGuardar = async () => {
@@ -24,7 +23,12 @@ const ModalRegistroEmpleado = ({
   };
 
   return (
-    <Modal show={mostrarModal} onHide={() => setMostrarModal(false)} backdrop="static" centered>
+    <Modal
+      show={mostrarModal}
+      onHide={() => setMostrarModal(false)}
+      backdrop="static"
+      centered
+    >
       <Modal.Header closeButton>
         <Modal.Title>Nuevo Empleado</Modal.Title>
       </Modal.Header>
@@ -127,8 +131,8 @@ const ModalRegistroEmpleado = ({
         <Button variant="secondary" onClick={() => setMostrarModal(false)}>
           Cancelar
         </Button>
-        <Button 
-          variant="primary" 
+        <Button
+          variant="primary"
           onClick={handleGuardar}
           disabled={deshabilitado}
         >

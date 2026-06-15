@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import { Card, Row, Col, Spinner, Button } from "react-bootstrap";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
-const TarjetasProductos = ({ productos, categorias, abrirModalEdicion, abrirModalEliminacion }) => {
+const TarjetasProductos = ({ productos, categorias, abrirModalEdicion, abrirModalEliminacion, generarQRImagen }) => {
   const [cargando, setCargando] = useState(true);
   const [idTarjetaActiva, setIdTarjetaActiva] = useState(null);
 
@@ -99,6 +99,17 @@ const TarjetasProductos = ({ productos, categorias, abrirModalEdicion, abrirModa
                     aria-label={`Eliminar ${producto.nombre_producto}`}
                   >
                     <i className="bi bi-trash"></i>
+                  </Button>
+                  <Button
+                    variant="outline-primary"
+                    size="sm"
+                    onClick={() => {
+                      generarQRImagen(producto);
+                      setIdTarjetaActiva(null);
+                    }}
+                    title="Generar código QR de la imagen"
+                  >
+                    <i className="bi bi-qr-code"></i>
                   </Button>
                 </div>
               </div>

@@ -3,9 +3,12 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { Container, Nav, Navbar, Offcanvas } from "react-bootstrap";
 import logo from "../../assets/logo.png";
 import { supabase } from "../..//database/supabaseconfig";
+import ChatIA from "../ia/ChatIA";
 
 function Encabezado() {
   const [mostrarMenu, setMostrarMenu] = useState(false);
+  const [mostrarChatIA, setMostrarChatIA] = useState(false);
+
   const navigate = useNavigate();
   const location = useLocation(); // Para detectar la ruta actual
 
@@ -76,6 +79,20 @@ function Encabezado() {
             <strong>Categorías</strong>
           </Nav.Link>
           <Nav.Link
+            onClick={() => manejarNavegación("/ventas")}
+            className={mostrarMenu ? "color-texto-marca" : "text-black"}
+          >
+            {mostrarMenu ? <i className="bi-cart-fill me-2"></i> : null}
+            <strong>Ventas</strong>
+          </Nav.Link>
+          <Nav.Link
+            onClick={() => manejarNavegación("/clientes")}
+            className={mostrarMenu ? "color-texto-marca" : "text-black"}
+          >
+            {mostrarMenu ? <i className="bi-bookmark-fill me-2"></i> : null}
+            <strong>Clientes</strong>
+          </Nav.Link>
+          <Nav.Link
             onClick={() => manejarNavegación("/Productos")}
             className={mostrarMenu ? "color-texto-marca" : "text-black"}
           >
@@ -89,7 +106,14 @@ function Encabezado() {
             {mostrarMenu ? <i className="bi-people-fill me-2"></i> : null}
             <strong>Empleados</strong>
           </Nav.Link>
-          
+          <Nav.Link
+            onClick={() => setMostrarChatIA(true)}
+            className={mostrarMenu ? "color-texto-marca" : "text-black"}
+          >
+            {mostrarMenu ? <i className="bi-robot me-2"></i> : null}
+            <i className="bi bi-robot me-2"></i>
+            <strong>Chat IA</strong>
+          </Nav.Link>
           {/* Opción para ir al catálogo público desde admin */}
           <Nav.Link
             onClick={() => manejarNavegación("/Catalogo")}
@@ -115,68 +139,74 @@ function Encabezado() {
   }
 
   return (
-    <Navbar
-      expand="md"
-      fixed="top"
-      className="color-navbar shadow-lg"
-      variant="dark"
-    >
-      <Container>
-        <Navbar.Brand
-          onClick={() => manejarNavegación(esCatalogo ? "/catalogo" : "/")}
-          className="text-white fw-bold d-flex align-items-center"
-          style={{ cursor: "pointer" }}
-        >
-          <img
-            alt=""
-            src={logo}
-            width="45"
-            height="45"
-            className="d-inline-block me-2"
-          />
-          <strong>
-            <h4 className="mb-0">ActionBar</h4>
-          </strong>
-        </Navbar.Brand>
-        {/* Botón del menú */}
-        {!esLogin && (
-          <Navbar.Toggle
-            aria-controls="menu-offcanvas"
-            onClick={manejarToggle}
-          />
-        )}
-        {/* Menú lateral */}
-        <Navbar.Offcanvas
-          id="menu-offcanvas"
-          placement="end"
-          show={mostrarMenu}
-          onHide={() => setMostrarMenu(false)}
-        >
-          <Offcanvas.Header closeButton>
-            <Offcanvas.Title>Menú Discosa</Offcanvas.Title>
-          </Offcanvas.Header>
-          <Offcanvas.Body>
-            {contenidoMenu}
-            {/* Información de usuario y botón cerrar sesión */}
-            {mostrarMenu && (
-              <div className="mt-3 p-3 rounded bg-light text-dark">
-                <p className="mb-2">
-                  <i className="bi-envelope-fill me-2"></i>{" "}
-                  {localStorage.getItem("usuario-supabase")?.toLowerCase() ||
-                    "Usuario"}
-                </p>
-                <button
-                  className="btn btn-outline-danger mt-3 w-100"
-                  onClick={cerrarSesion}
-                >
-                  <i className="bi-box-arrow-right me-2"></i> Cerrar sesión
-                </button>
-              </div>
-            )}
-          </Offcanvas.Body>
-        </Navbar.Offcanvas>
-      </Container>
-    </Navbar>
+    <>
+      <Navbar
+        expand="md"
+        fixed="top"
+        className="color-navbar shadow-lg"
+        variant="dark"
+      >
+        <Container>
+          <Navbar.Brand
+            onClick={() => manejarNavegación(esCatalogo ? "/catalogo" : "/")}
+            className="text-white fw-bold d-flex align-items-center"
+            style={{ cursor: "pointer" }}
+          >
+            <img
+              alt=""
+              src={logo}
+              width="45"
+              height="45"
+              className="d-inline-block me-2"
+            />
+            <strong>
+              <h4 className="mb-0">ActionBar</h4>
+            </strong>
+          </Navbar.Brand>
+          {/* Botón del menú */}
+          {!esLogin && (
+            <Navbar.Toggle
+              aria-controls="menu-offcanvas"
+              onClick={manejarToggle}
+            />
+          )}
+          {/* Menú lateral */}
+          <Navbar.Offcanvas
+            id="menu-offcanvas"
+            placement="end"
+            show={mostrarMenu}
+            onHide={() => setMostrarMenu(false)}
+          >
+            <Offcanvas.Header closeButton>
+              <Offcanvas.Title>Menú Discosa</Offcanvas.Title>
+            </Offcanvas.Header>
+            <Offcanvas.Body>
+              {contenidoMenu}
+              {/* Información de usuario y botón cerrar sesión */}
+              {mostrarMenu && (
+                <div className="mt-3 p-3 rounded bg-light text-dark">
+                  <p className="mb-2">
+                    <i className="bi-envelope-fill me-2"></i>{" "}
+                    {localStorage.getItem("usuario-supabase")?.toLowerCase() ||
+                      "Usuario"}
+                  </p>
+                  <button
+                    className="btn btn-outline-danger mt-3 w-100"
+                    onClick={cerrarSesion}
+                  >
+                    <i className="bi-box-arrow-right me-2"></i> Cerrar sesión
+                  </button>
+                </div>
+              )}
+            </Offcanvas.Body>
+          </Navbar.Offcanvas>
+        </Container>
+      </Navbar>
+      <ChatIA
+        mostrar={mostrarChatIA}
+        onCerrar={() => setMostrarChatIA(false)}
+      />
+    </>
   );
 }
 
