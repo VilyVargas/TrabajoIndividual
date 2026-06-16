@@ -3,12 +3,12 @@ import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Button, Alert, Spinner } from "react-bootstrap";
 import { supabase } from "../database/supabaseconfig";
 
-import ModalRegistroEmpleado from "../components/empleados/ModalRegistroEmpleado";
-import ModalEdicionEmpleado from "../components/empleados/ModalEdicionEmpleado";
-import TablaEmpleados from "../components/empleados/TablaEmpleados";
-import TarjetaEmpleado from "../components/empleados/TarjetaEmpleado";
-import NotificacionOperacion from "../components/NotificacionOperacion";
-import CuadroBusquedas from "../components/busquedas/CuadroBusquedas";
+import ModalRegistroEmpleado from "../components/empleados/ModalRegistroEmpleado.jsx";
+import ModalEdicionEmpleado from "../components/empleados/ModalEdicionEmpleado.jsx";
+import TablaEmpleados from "../components/empleados/TablaEmpleados.jsx";
+import TarjetaEmpleado from "../components/empleados/TarjetaEmpleado.jsx";
+import NotificacionOperacion from "../components/NotificacionOperacion.jsx";
+import CuadroBusquedas from "../components/busquedas/CuadroBusquedas.jsx";
 
 const Empleados = () => {
   const [empleados, setEmpleados] = useState([]);

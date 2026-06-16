@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Button, Spinner } from "react-bootstrap";
 import { supabase } from "../database/supabaseconfig";
-import NotificacionOperacion from "../components/NotificacionOperacion";
-import CuadroBusquedas from "../components/busquedas/CuadroBusquedas";
-import Paginacion from "../components/ordenamiento/Paginacion";
-import TablaVentas from "../components/ventas/TablaVentas";
-import TarjetaVenta from "../components/ventas/TarjetaVenta";
-import FormularioVenta from "../components/ventas/FormularioVenta";
+import NotificacionOperacion from "../components/NotificacionOperacion.jsx";
+import CuadroBusquedas from "../components/busquedas/CuadroBusquedas.jsx";
+import Paginacion from "../components/ordenamiento/Paginacion.jsx";
+import TablaVentas from "../components/ventas/TablaVentas.jsx";
+import TarjetaVenta from "../components/ventas/TarjetaVenta.jsx";
+import FormularioVenta from "../components/ventas/FormularioVenta.jsx";
 
 const Ventas = () => {
   const [toast, setToast] = useState({ mostrar: false, mensaje: "", tipo: "" });

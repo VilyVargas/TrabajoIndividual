@@ -2,15 +2,15 @@ import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Button, Alert, Spinner } from "react-bootstrap";
 import { supabase } from "../database/supabaseconfig";
 import ModalRegistroProducto from "../components/productos/ModalRegistroProducto";
-import TablaProductos from "../components/productos/TablaProductos";
-import TarjetasProductos from "../components/productos/TarjetasProductos";
-import NotificacionOperacion from "../components/NotificacionOperacion";
-import CuadroBusquedas from "../components/busquedas/CuadroBusquedas";
-import ModalEliminacionProducto from "../components/productos/ModalEliminacionProducto";
-import ModalEdicionProducto from "../components/productos/ModalEdicionProducto";
+import TablaProductos from "../components/productos/TablaProductos.jsx";
+import TarjetasProductos from "../components/productos/TarjetasProductos.jsx";
+import NotificacionOperacion from "../components/NotificacionOperacion.jsx";
+import CuadroBusquedas from "../components/busquedas/CuadroBusquedas.jsx";
+import ModalEliminacionProducto from "../components/productos/ModalEliminacionProducto.jsx";
+import ModalEdicionProducto from "../components/productos/ModalEdicionProducto.jsx";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
-import ModalQRProducto from "../components/productos/ModalQRProducto";
+import ModalQRProducto from "../components/productos/ModalQRProducto.jsx";
 
 const Productos = () => {
   const [mostrarModalQR, setMostrarModalQR] = useState(false);

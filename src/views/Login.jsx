@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import FormularioLogin from "../components/login/FormularioLogin";
+import FormularioLogin from "../components/login/FormularioLogin.jsx";
 import { supabase } from "../database/supabaseconfig";
 
 const Login = () => {

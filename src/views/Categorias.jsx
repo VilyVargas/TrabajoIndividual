@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Button, Spinner } from "react-bootstrap";
 import { supabase } from "../database/supabaseconfig";
-import ModalRegistroCategoria from "../components/categorias/ModalRegistroCategoria";
-import TablaCategorias from "../components/categorias/TablaCategorias";
-import NotificacionOperacion from "../components/NotificacionOperacion";
-import ModalEdicionCategoria from "../components/categorias/ModalEdicionCategoria";
-import ModalEliminacionCategoria from "../components/categorias/ModalEliminacionCategoria";
-import TarjetaCategoria from "../components/categorias/TarjetasCategorias";
-import CuadroBusquedas from "../components/busquedas/CuadroBusquedas";
+import ModalRegistroCategoria from "../components/categorias/ModalRegistroCategoria.jsx";
+import TablaCategorias from "../components/categorias/TablaCategorias.jsx";
+import NotificacionOperacion from "../components/NotificacionOperacion.jsx";
+import ModalEdicionCategoria from "../components/categorias/ModalEdicionCategoria.jsx";
+import ModalEliminacionCategoria from "../components/categorias/ModalEliminacionCategoria.jsx";
+import TarjetaCategoria from "../components/categorias/TarjetasCategorias.jsx";
+import CuadroBusquedas from "../components/busquedas/CuadroBusquedas.jsx";
 import { Alert } from "react-bootstrap";
-import Paginacion from "../components/ordenamiento/Paginacion";
+import Paginacion from "../components/ordenamiento/Paginacion.jsx";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 
