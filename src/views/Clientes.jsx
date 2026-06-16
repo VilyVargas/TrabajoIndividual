@@ -8,7 +8,7 @@ import ModalEdicionCliente from "../components/clientes/ModalEdicionClientes";
 import TablaClientes from "../components/clientes/TablaCliente";
 import NotificacionOperacion from "../components/NotificacionOperacion";
 import CuadroBusquedas from "../components/busquedas/CuadroBusquedas";
-import Paginacion from "../components/Ordenamiento/Paginacion";
+import Paginacion from "../components/ordenamiento/Paginacion";
 
 const Clientes = () => {
   const [toast, setToast] = useState({ mostrar: false, mensaje: "", tipo: "" });

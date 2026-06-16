@@ -9,7 +9,7 @@ import ModalEliminacionCategoria from "../components/categorias/ModalEliminacion
 import TarjetaCategoria from "../components/categorias/TarjetasCategorias";
 import CuadroBusquedas from "../components/busquedas/CuadroBusquedas";
 import { Alert } from "react-bootstrap";
-import Paginacion from "../components/Ordenamiento/Paginacion";
+import Paginacion from "../components/ordenamiento/Paginacion";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 
