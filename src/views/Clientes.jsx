@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Button, Spinner, Alert } from "react-bootstrap";
 import { supabase } from "../database/supabaseconfig";
-import TarjetaCliente from "../components/clientes/TarjetaCliente";
-import ModalRegistroCliente from "../components/clientes/ModalRegistroCliente";
-import ModalEliminacionCliente from "../components/clientes/ModalEliminacionCliente";
-import ModalEdicionCliente from "../components/clientes/ModalEdicionClientes";
-import TablaClientes from "../components/clientes/TablaCliente";
-import NotificacionOperacion from "../components/NotificacionOperacion";
-import CuadroBusquedas from "../components/busquedas/CuadroBusquedas";
-import Paginacion from "../components/ordenamiento/Paginacion";
+import TarjetaCliente from "../components/clientes/TarjetaCliente.jsx";
+import ModalRegistroCliente from "../components/clientes/ModalRegistroCliente.jsx";
+import ModalEliminacionCliente from "../components/clientes/ModalEliminacionCliente.jsx";
+import ModalEdicionCliente from "../components/clientes/ModalEdicionClientes.jsx";
+import TablaClientes from "../components/clientes/TablaCliente.jsx";
+import NotificacionOperacion from "../components/NotificacionOperacion.jsx";
+import CuadroBusquedas from "../components/busquedas/CuadroBusquedas.jsx";
+import Paginacion from "../components/ordenamiento/Paginacion.jsx";
 
 const Clientes = () => {
   const [toast, setToast] = useState({ mostrar: false, mensaje: "", tipo: "" });
